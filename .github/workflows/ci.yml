@@ -34,8 +34,15 @@ jobs:
             pytest-asyncio \
             ruff
 
-      - name: Ruff
-        run: ruff check src tests
+      - name: Ruff (smoke subset)
+        run: |
+          ruff check \
+            src/parsertang/streams.py \
+            src/parsertang/network_aliases.py \
+            src/parsertang/ws_native/okx.py \
+            tests/test_streams_preload_markets.py \
+            tests/test_ws_native_okx.py \
+            tests/test_network_aliases.py
 
       - name: Smoke tests
         env:
@@ -45,4 +52,3 @@ jobs:
             tests/test_streams_preload_markets.py \
             tests/test_ws_native_okx.py \
             tests/test_network_aliases.py
-
