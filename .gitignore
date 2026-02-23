@@ -1,0 +1,25 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.worktrees/
+.env
+node_modules/
+dist/
+build/
+.cache/
+.DS_Store
+
+# Logs and runtime data
+*.log
+*.jsonl
+data/universe_symbols.json
+
+# AI assistant artifacts (deprecated)
+.gemini/
+.memory_bank/
+.protocols/
+uv.lock
+
+# Local proxy lists (secrets)
+Webshare*.txt
