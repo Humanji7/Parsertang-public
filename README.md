@@ -1,8 +1,19 @@
 # Parsertang
 
-WS-first CEX arbitrage monitoring and validation pipeline (Python, async, ccxt/ccxt.pro).
+Real-time async Python system for cross-exchange market monitoring, validation, and reliability-first alerting.
+
+Domain context: CEX arbitrage monitoring.
 
 This project focuses on a practical problem: detecting cross-exchange opportunities while aggressively filtering out false positives caused by stale books, low liquidity, bad fee assumptions, or broken streams.
+
+## Portfolio Start Here
+
+If you are reviewing this repo as a hiring manager / trial-project evaluator:
+
+- `PROJECT_SUMMARY.md` (1-page portfolio summary)
+- `docs/architecture.md` (system architecture and component map)
+- `docs/incidents/no-alerts-root-cause.md` (real debugging case)
+- `tests/test_streams_preload_markets.py` (example targeted regression test)
 
 ## What It Does
 
@@ -32,6 +43,25 @@ This repo is a good sample of:
 4. Validate via REST + liquidity + fee calculations
 5. Apply TRUTH/health gates
 6. Send alert (or log exact rejection reason)
+
+```mermaid
+flowchart TD
+    A["WS Streams (BBO / Order Books)"] --> B["In-Memory State"]
+    B --> C["Opportunity Candidates"]
+    C --> D["REST Validation"]
+    D --> E["Fee + Liquidity Checks"]
+    E --> F{"TRUTH / Health Gates"}
+    F -->|pass| G["Telegram Alert"]
+    F -->|block| H["Reasoned Rejection Log"]
+```
+
+## Incident Proof (Why This Is More Than a Bot Repo)
+
+- I investigated a "no alerts" incident and showed it was not just market conditions.
+- Root cause included exchange coverage degradation (one exchange collapsed from allocated symbols to effectively zero live symbols).
+- The fix path was guided by funnel/health evidence, not by loosening risk thresholds.
+
+See: `docs/incidents/no-alerts-root-cause.md`
 
 ## Tech Stack
 
