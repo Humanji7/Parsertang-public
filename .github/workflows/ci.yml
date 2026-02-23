@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  lint-and-smoke-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install test/lint deps (no ccxt.pro)
+        run: |
+          python -m pip install --upgrade pip
+          pip install \
+            ccxt \
+            pandas \
+            python-telegram-bot \
+            tenacity \
+            pydantic \
+            pydantic-settings \
+            protobuf \
+            aiohttp-socks \
+            pysocks \
+            pytest \
+            pytest-asyncio \
+            ruff
+
+      - name: Ruff
+        run: ruff check src tests
+
+      - name: Smoke tests
+        env:
+          PYTHONPATH: src
+        run: |
+          pytest -q \
+            tests/test_streams_preload_markets.py \
+            tests/test_ws_native_okx.py \
+            tests/test_network_aliases.py
+

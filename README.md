@@ -1,5 +1,9 @@
 # Parsertang
 
+[![CI](https://github.com/Humanji7/Parsertang-public/actions/workflows/ci.yml/badge.svg)](https://github.com/Humanji7/Parsertang-public/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/python-3.11-blue)
+![License: MIT](https://img.shields.io/badge/license-MIT-green)
+
 Real-time async Python system for cross-exchange market monitoring, validation, and reliability-first alerting.
 
 Domain context: CEX arbitrage monitoring.
@@ -94,6 +98,8 @@ poetry run pytest
 poetry run ruff check .
 poetry run ruff format .
 ```
+
+Note: `ccxt.pro` is a commercial dependency. The public CI in this repo runs lint + smoke tests without requiring it.
 
 ## Configuration
 
